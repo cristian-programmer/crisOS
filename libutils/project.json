@@ -1,0 +1,7 @@
+{
+    "id":"libutils",
+    "name": "Utils library",
+    "description": "",
+    "type":"lib",
+    "libs": ["libc"]
+}

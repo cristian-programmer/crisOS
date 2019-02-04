@@ -1,0 +1,7 @@
+{
+    "id":"kernel",
+    "name":"Kernel",
+    "description":"",
+    "type":"",
+    "libs": ["libc", "libutils"]
+}

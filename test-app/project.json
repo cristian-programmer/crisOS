@@ -1,0 +1,7 @@
+{
+    "id":"test-app",
+    "name": "Test Aplication",
+    "description": "",
+    "type":"app",
+    "libs": ["libc", "libsk", "libutils"]
+}
