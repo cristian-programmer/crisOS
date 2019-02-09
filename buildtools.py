@@ -33,6 +33,7 @@ def ld(output, objects):
     pass
 
 class Project(object):
+
     def __init__(self, data):
         self.data = data
 
@@ -44,11 +45,12 @@ class Project(object):
 
             self.id = data["id"]
             self.type = data["type"]
-            self.path = data['path']
+            self.path = data["path"]
 
             self.name = data["name"] if "name" in data else "Unnamed"
             self.description = data["description"] if "description" in data else "No description"
             self.libs = data["libs"] if "libs" in data else []
+    
     def getAssets(self):
         assets_path = os.path.join(self)            
 
@@ -116,37 +118,39 @@ class Project(object):
         bin_path =  os.path.join(self.path, "%s.")
         print("building %s(%s): %s.."% (self.name, self.id, self.description)) 
 
-    def getProjects(path):
-        projects = {} 
+def getProjects(path):
+    projects = {} 
 
-        for file in os.listdir(path):
-            project_path = os.path.join(os.getcwd(), file)
-            json_path = os.path.join(project_path, "project.json")
+    for file in os.listdir(path):
+        project_path = os.path.join(os.getcwd(), file)
+        # print(project_path)
+        json_path = os.path.join(project_path, "project.json")
+        # print(json_path)
+        if os.path.isdir(project_path) and os.path.exists(json_path):
+            data = json.loads(open(json_path).read())
+            data["path"] = project_path
+            # print(projects)
+            projects[data["id"]] = Project(data)
+    return projects
 
-            if os.path.isdir(project_path) and os.path.exists(json_path):
-                data = join.loads( open(json_path).read() )
-                data["path"] = project_path
-
-                projects[data["id"]] = Project(data)
-        return projects
-    
-    def buildAll(path):
+def buildAll(path):
         pass
 
-    if __name__ = "__main__":
-        projects = getProjects(".")
+if __name__ == "__main__":
+    projects = getProjects(".")
+    # print(projects)
+    if len(sys.argv) == 3 and sys.argv[1] == "inf" :
+        projects[sys.argv[2]].Print(projects)
 
-        if len(sys.argv) == 3 and sys.argv[1] == "info" :
-            projects[sys.argv[2]].Print(projects)
-        if len(sys.argv) == 3 and sys.argv[1] == "list" :
-            for project in projects:
-                print(project, end=" ")
-            print("")
-        if len(sys.argv) == 2 and sys.argv[1] =="buildall":
-            for id in projects:
-                projects[id].Build(projects)
-        if (len(sys.argv) == 1) or (len(sys.argv) == 2) and sys.argv[1] == "help" :
-            print("skifOS build system.")
+    # if len(sys.argv) == 3 and sys.argv[1] == "list" :
+    #     for project in projects:
+    #         print(project, end=" ")
+    #     print("")
+    # if len(sys.argv) == 2 and sys.argv[1] =="buildall":
+    #     for id in projects:
+    #         projects[id].Build(projects)
+    # if (len(sys.argv) == 1) or (len(sys.argv) == 2) and sys.argv[1] == "help" :
+    #     print("skifOS build system.")
 
  
     
